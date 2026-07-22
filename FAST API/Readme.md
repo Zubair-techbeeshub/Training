@@ -1,1 +1,1 @@
-This includes projects using FAST API
+This includes hands-on projects developed with FastAPI.
