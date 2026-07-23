@@ -46,6 +46,25 @@ async def student(student_id: int):
 async def studentsall():
     return STUDENTS
 
+#Update the student record
+@app.put("/students/{student_id}")
+async def update_student(student_id: int, updated_student: Student):
+    student = next((s for s in STUDENTS if s["id"] == student_id),None)
+    if student is None:
+        raise HTTPException(status_code=404, detail="Student not found")
+    student["name"] = updated_student.name
+    student["standard"] = updated_student.standard
+    return student
+
+#Delete a student record
+@app.delete("/students/{student_id}")
+async def delete_student(student_id: int):
+    student = next((s for s in STUDENTS if s["id"] == student_id),None)
+    if student is None:
+        raise HTTPException(status_code=404, detail="Student not found")
+    STUDENTS.remove(student)
+    return { "message": "Student deleted successfully"}
+
 @app.get('/about')
 async def about():
     return {'about':'This is a student database'}
